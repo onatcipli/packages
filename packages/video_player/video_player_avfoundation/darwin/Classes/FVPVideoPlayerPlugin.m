@@ -299,6 +299,11 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
 
   _registrar = registrar;
 
+  // Set the desired network behavior parameters
+  item.preferredPeakBitRate = 1000000; // Example value: 1 Mbps
+  item.preferredForwardBufferDuration = 15.0; // Example value: 15 seconds
+  item.canUseNetworkResourcesForLiveStreamingWhilePaused = YES; // Example value: YES
+
   AVAsset *asset = [item asset];
   void (^assetCompletionHandler)(void) = ^{
     if ([asset statusOfValueForKey:@"tracks" error:nil] == AVKeyValueStatusLoaded) {
