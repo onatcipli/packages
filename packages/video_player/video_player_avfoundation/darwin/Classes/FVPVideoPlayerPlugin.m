@@ -299,9 +299,9 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
 
   _registrar = registrar;
 
-  // Set the desired network behavior parameters
-  item.preferredPeakBitRate = 1000000; // Example value: 1 Mbps
-  item.preferredForwardBufferDuration = 15.0; // Example value: 15 seconds
+  // Reducing the pre-cache mechanisim, saving data usage
+  item.preferredPeakBitRate = 3000000; // Example value: 3 Mbps
+  item.preferredForwardBufferDuration = 20.0; // Example value: 20 seconds
   item.canUseNetworkResourcesForLiveStreamingWhilePaused = YES; // Example value: YES
 
   AVAsset *asset = [item asset];
