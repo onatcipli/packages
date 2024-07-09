@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class FVPPositionMessage;
 @class FVPCreateMessage;
 @class FVPMixWithOthersMessage;
+@class FVPVideoLoadConfiguration;
+@class FVPAndroidLoadControl;
+@class FVPDarwinLoadControl;
 
 @interface FVPTextureMessage : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
