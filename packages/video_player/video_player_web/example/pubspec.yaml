@@ -2,8 +2,8 @@ name: video_player_for_web_integration_tests
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
-  flutter: ">=3.19.0"
+  sdk: ^3.2.2
+  flutter: ">=3.16.2"
 
 dependencies:
   flutter:
