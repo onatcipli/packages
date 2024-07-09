@@ -25,10 +25,22 @@ dependencies:
   flutter:
     sdk: flutter
   html: ^0.15.0
-  video_player_android: ^2.3.5
-  video_player_avfoundation: ^2.5.0
-  video_player_platform_interface: ">=6.1.0 <7.0.0"
-  video_player_web: ^2.0.0
+  video_player_android:
+    git:
+      url: https://github.com/onatcipli/packages.git
+      ref: video_player/video_load_configuration
+  video_player_avfoundation:
+    git:
+      url: https://github.com/onatcipli/packages.git
+      ref: video_player/video_load_configuration
+  video_player_platform_interface:
+    git:
+      url: https://github.com/onatcipli/packages.git
+      ref: video_player/video_load_configuration
+  video_player_web:
+    git:
+      url: https://github.com/onatcipli/packages.git
+      ref: video_player/video_load_configuration
 
 dev_dependencies:
   flutter_test:
