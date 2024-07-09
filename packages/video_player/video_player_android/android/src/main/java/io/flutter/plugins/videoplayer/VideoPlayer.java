@@ -71,7 +71,24 @@ final class VideoPlayer {
     surface = new Surface(textureEntry.surfaceTexture());
     exoPlayer.setVideoSurface(surface);
     setAudioAttributes(exoPlayer, options.mixWithOthers);
+    setLoadControl(exoPlayer, options.videoLoadConfiguration);
     exoPlayer.addListener(new ExoPlayerEventListener(exoPlayer, videoPlayerEvents));
+  }
+
+  private void setLoadControl(ExoPlayer exoPlayer, VideoLoadConfiguration config) {
+    if (config != null) {
+        // Apply Android load control settings
+        AndroidLoadControl androidConfig = config.androidLoadControl;
+        exoPlayer.setLoadControl(new DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                androidConfig.minBufferDuration,
+                androidConfig.maxBufferDuration,
+                androidConfig.bufferForPlaybackDuration,
+                androidConfig.bufferForPlaybackAfterRebufferDuration
+            )
+            .setPrioritizeTimeOverSizeThresholds(androidConfig.prioritizeTimeOverSizeThresholds)
+            .build());
+    }
   }
 
   void sendBufferingUpdate() {

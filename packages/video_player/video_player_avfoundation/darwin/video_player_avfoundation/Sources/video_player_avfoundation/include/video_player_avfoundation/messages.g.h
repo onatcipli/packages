@@ -22,12 +22,35 @@ NS_ASSUME_NONNULL_BEGIN
                           uri:(nullable NSString *)uri
                   packageName:(nullable NSString *)packageName
                    formatHint:(nullable NSString *)formatHint
-                  httpHeaders:(NSDictionary<NSString *, NSString *> *)httpHeaders;
+                  httpHeaders:(NSDictionary<NSString *, NSString *> *)httpHeaders
+              videoLoadConfiguration:(nullable FVPVideoLoadConfiguration *)videoLoadConfiguration;
 @property(nonatomic, copy, nullable) NSString *asset;
 @property(nonatomic, copy, nullable) NSString *uri;
 @property(nonatomic, copy, nullable) NSString *packageName;
 @property(nonatomic, copy, nullable) NSString *formatHint;
 @property(nonatomic, copy) NSDictionary<NSString *, NSString *> *httpHeaders;
+@property(nonatomic, strong, nullable) FVPVideoLoadConfiguration *videoLoadConfiguration;
+@end
+
+@interface FVPVideoLoadConfiguration : NSObject
+@property(nonatomic, strong) FVPAndroidLoadControl *androidLoadControl;
+@property(nonatomic, strong) FVPDarwinLoadControl *darwinLoadControl;
+@end
+
+@interface FVPAndroidLoadControl : NSObject
+@property(nonatomic, assign) int minBufferDuration;
+@property(nonatomic, assign) int maxBufferDuration;
+@property(nonatomic, assign) int backBufferDuration;
+@property(nonatomic, assign) int bufferForPlaybackDuration;
+@property(nonatomic, assign) int bufferForPlaybackAfterRebufferDuration;
+@property(nonatomic, assign) BOOL prioritizeTimeOverSizeThresholds;
+@end
+
+@interface FVPDarwinLoadControl : NSObject
+@property(nonatomic, assign) BOOL automaticallyWaitsToMinimizeStalling;
+@property(nonatomic, assign) int preferredForwardBufferDuration;
+@property(nonatomic, assign) BOOL canUseNetworkResourcesForLiveStreamingWhilePaused;
+@property(nonatomic, assign) int preferredPeakBitRate;
 @end
 
 /// The codec used by FVPAVFoundationVideoPlayerApi.

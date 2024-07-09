@@ -719,14 +719,11 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
   [self.playersByTextureId removeAllObjects];
 }
 
-- (nullable NSNumber *)createWithOptions:(nonnull FVPCreationOptions *)options
-                                   error:(FlutterError **)error {
+- (NSNumber *)createWithOptions:(FVPCreationOptions *)options error:(FlutterError **)error {
   FVPFrameUpdater *frameUpdater = [[FVPFrameUpdater alloc] initWithRegistry:_registry];
-  FVPDisplayLink *displayLink =
-      [self.displayLinkFactory displayLinkWithRegistrar:_registrar
-                                               callback:^() {
-                                                 [frameUpdater displayLinkFired];
-                                               }];
+  FVPDisplayLink *displayLink = [_displayLinkFactory displayLinkWithRegistrar:_registrar callback:^{
+    [frameUpdater displayLinkFired];
+  }];
 
   FVPVideoPlayer *player;
   if (options.asset) {
@@ -742,6 +739,7 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
                                          displayLink:displayLink
                                            avFactory:_avFactory
                                            registrar:self.registrar];
+      [player setupPlayerWithOptions:options.videoLoadConfiguration];
       return @([self onPlayerSetup:player frameUpdater:frameUpdater]);
     } @catch (NSException *exception) {
       *error = [FlutterError errorWithCode:@"video_player" message:exception.reason details:nil];
@@ -754,6 +752,7 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
                                      httpHeaders:options.httpHeaders
                                        avFactory:_avFactory
                                        registrar:self.registrar];
+    [player setupPlayerWithOptions:options.videoLoadConfiguration];
     return @([self onPlayerSetup:player frameUpdater:frameUpdater]);
   } else {
     *error = [FlutterError errorWithCode:@"video_player" message:@"not implemented" details:nil];
