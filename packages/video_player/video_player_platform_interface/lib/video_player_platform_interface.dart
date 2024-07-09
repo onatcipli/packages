@@ -379,6 +379,7 @@ class VideoPlayerOptions {
     this.mixWithOthers = false,
     this.allowBackgroundPlayback = false,
     this.webOptions,
+    this.videoLoadConfiguration,
   });
 
   /// Set this to true to keep playing video in background, when app goes in background.
@@ -394,6 +395,9 @@ class VideoPlayerOptions {
 
   /// Additional web controls
   final VideoPlayerWebOptions? webOptions;
+
+  /// Configuration for video load control.
+  final VideoLoadConfiguration? videoLoadConfiguration;
 }
 
 /// [VideoPlayerWebOptions] can be optionally used to set additional web settings
@@ -473,4 +477,49 @@ class VideoPlayerWebOptionsControls {
 
     return controlsList.join(' ');
   }
+}
+
+/// Configuration for video load control.
+class VideoLoadConfiguration {
+  const VideoLoadConfiguration({
+    required this.androidLoadControl,
+    required this.darwinLoadControl,
+  });
+
+  final AndroidLoadControl androidLoadControl;
+  final DarwinLoadControl darwinLoadControl;
+}
+
+/// Android-specific load control configuration.
+class AndroidLoadControl {
+  const AndroidLoadControl({
+    required this.minBufferDuration,
+    required this.maxBufferDuration,
+    required this.backBufferDuration,
+    required this.bufferForPlaybackDuration,
+    required this.bufferForPlaybackAfterRebufferDuration,
+    required this.prioritizeTimeOverSizeThresholds,
+  });
+
+  final Duration minBufferDuration;
+  final Duration maxBufferDuration;
+  final Duration backBufferDuration;
+  final Duration bufferForPlaybackDuration;
+  final Duration bufferForPlaybackAfterRebufferDuration;
+  final bool prioritizeTimeOverSizeThresholds;
+}
+
+/// Darwin-specific load control configuration.
+class DarwinLoadControl {
+  const DarwinLoadControl({
+    required this.automaticallyWaitsToMinimizeStalling,
+    required this.preferredForwardBufferDuration,
+    required this.canUseNetworkResourcesForLiveStreamingWhilePaused,
+    required this.preferredPeakBitRate,
+  });
+
+  final bool automaticallyWaitsToMinimizeStalling;
+  final Duration preferredForwardBufferDuration;
+  final bool canUseNetworkResourcesForLiveStreamingWhilePaused;
+  final int preferredPeakBitRate;
 }

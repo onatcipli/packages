@@ -44,12 +44,13 @@ class PositionMessage {
 }
 
 class CreateMessage {
-  CreateMessage({required this.httpHeaders});
+  CreateMessage({required this.httpHeaders, this.videoLoadConfiguration});
   String? asset;
   String? uri;
   String? packageName;
   String? formatHint;
   Map<String?, String?> httpHeaders;
+  VideoLoadConfiguration? videoLoadConfiguration;
 }
 
 class MixWithOthersMessage {

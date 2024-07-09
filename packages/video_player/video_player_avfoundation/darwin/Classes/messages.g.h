@@ -73,6 +73,28 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *packageName;
 @property(nonatomic, copy, nullable) NSString *formatHint;
 @property(nonatomic, strong) NSDictionary<NSString *, NSString *> *httpHeaders;
+@property(nonatomic, strong, nullable) FVPVideoLoadConfiguration *videoLoadConfiguration;
+@end
+
+@interface FVPVideoLoadConfiguration : NSObject
+@property(nonatomic, strong) FVPAndroidLoadControl *androidLoadControl;
+@property(nonatomic, strong) FVPDarwinLoadControl *darwinLoadControl;
+@end
+
+@interface FVPAndroidLoadControl : NSObject
+@property(nonatomic, assign) int minBufferDuration;
+@property(nonatomic, assign) int maxBufferDuration;
+@property(nonatomic, assign) int backBufferDuration;
+@property(nonatomic, assign) int bufferForPlaybackDuration;
+@property(nonatomic, assign) int bufferForPlaybackAfterRebufferDuration;
+@property(nonatomic, assign) BOOL prioritizeTimeOverSizeThresholds;
+@end
+
+@interface FVPDarwinLoadControl : NSObject
+@property(nonatomic, assign) BOOL automaticallyWaitsToMinimizeStalling;
+@property(nonatomic, assign) int preferredForwardBufferDuration;
+@property(nonatomic, assign) BOOL canUseNetworkResourcesForLiveStreamingWhilePaused;
+@property(nonatomic, assign) int preferredPeakBitRate;
 @end
 
 @interface FVPMixWithOthersMessage : NSObject

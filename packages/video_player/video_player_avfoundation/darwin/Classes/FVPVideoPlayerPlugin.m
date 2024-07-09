@@ -742,6 +742,7 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
                                         frameUpdater:frameUpdater
                                        playerFactory:_playerFactory
                                            registrar:self.registrar];
+      [player setupPlayerWithOptions:input.videoLoadConfiguration];
       return [self onPlayerSetup:player frameUpdater:frameUpdater];
     } @catch (NSException *exception) {
       *error = [FlutterError errorWithCode:@"video_player" message:exception.reason details:nil];
@@ -753,6 +754,7 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
                                      httpHeaders:input.httpHeaders
                                    playerFactory:_playerFactory
                                        registrar:self.registrar];
+    [player setupPlayerWithOptions:input.videoLoadConfiguration];
     return [self onPlayerSetup:player frameUpdater:frameUpdater];
   } else {
     *error = [FlutterError errorWithCode:@"video_player" message:@"not implemented" details:nil];
