@@ -28,18 +28,22 @@ dependencies:
   video_player_android:
     git:
       url: https://github.com/onatcipli/packages.git
+      path: packages/video_player/video_player_android
       ref: video_player/video_load_configuration
   video_player_avfoundation:
     git:
       url: https://github.com/onatcipli/packages.git
+      path: packages/video_player/video_player_avfoundation
       ref: video_player/video_load_configuration
   video_player_platform_interface:
     git:
       url: https://github.com/onatcipli/packages.git
+      path: packages/video_player/video_player_platform_interface
       ref: video_player/video_load_configuration
   video_player_web:
     git:
       url: https://github.com/onatcipli/packages.git
+      path: packages/video_player/video_player_web
       ref: video_player/video_load_configuration
 
 dev_dependencies:
