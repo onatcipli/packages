@@ -18,6 +18,8 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackException;
 import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Player.Listener;
 import com.google.android.exoplayer2.audio.AudioAttributes;
@@ -64,6 +66,9 @@ final class VideoPlayer {
 
   private DefaultHttpDataSource.Factory httpDataSourceFactory = new DefaultHttpDataSource.Factory();
 
+  private LoadControl loadControl;
+
+
   VideoPlayer(
       Context context,
       EventChannel eventChannel,
@@ -76,7 +81,25 @@ final class VideoPlayer {
     this.textureEntry = textureEntry;
     this.options = options;
 
-    ExoPlayer exoPlayer = new ExoPlayer.Builder(context).build();
+    ExoPlayer.Builder exoPlayerBuilder = new ExoPlayer.Builder(context);
+
+    DefaultLoadControl.Builder builder = new DefaultLoadControl.Builder()
+    .setBufferDurationsMs(
+                        (int)20000, // minBufferDuration
+                        (int)20000, // maxBufferDuration
+                        (int)2500, // bufferForPlaybackDuration
+                        (int)5000 // bufferForPlaybackAfterRebufferDuration
+                    )
+                    .setPrioritizeTimeOverSizeThresholds(true) // prioritizeTimeOverSizeThresholds
+                    .setBackBuffer((int)0, false); // backBufferDuration
+    
+
+    loadControl = builder.build();
+
+    exoPlayerBuilder.setLoadControl(loadControl);
+
+    exoPlayer = exoPlayerBuilder.build();  
+
     Uri uri = Uri.parse(dataSource);
 
     buildHttpDataSourceFactory(httpHeaders);
@@ -122,6 +145,14 @@ final class VideoPlayer {
       httpDataSourceFactory.setDefaultRequestProperties(httpHeaders);
     }
   }
+
+  // Dart can't distinguish between int sizes so
+    // Flutter may send us a Long or an Integer
+    // depending on the number of bits required to
+    // represent it.
+    public static Long getLong(Object o) {
+        return (o == null || o instanceof Long) ? (Long)o : Long.valueOf(((Integer)o).intValue());
+    }
 
   private MediaSource buildMediaSource(
       Uri uri, DataSource.Factory mediaDataSourceFactory, String formatHint) {
